@@ -12,10 +12,10 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  async getUserByUuid(
-    @Arg('uuid') uuid: string,
+  async getUserById(
+    @Arg('id') id: string,
   ): Promise<User | undefined | null> {
-    const res = await this.manager.findOne<User>(User, { uuid: uuid })
+    const res = await this.manager.findOne<User>(User, { id: id })
     return res
   }
 

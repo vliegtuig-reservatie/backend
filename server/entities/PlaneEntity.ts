@@ -2,28 +2,27 @@ import { Field, ID, InputType, Int, ObjectType } from 'type-graphql'
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   ObjectID,
   ObjectIdColumn,
+  UpdateDateColumn,
 } from 'typeorm'
 
 @ObjectType()
-@InputType('UserInput')
-@Entity('Users')
-export class User extends BaseEntity {
+@InputType('PlaneInput')
+@Entity('Planes')
+export class Plane extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
   @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
   id?: ObjectID
   @Field()
   @Column()
-  firstName: string
+  rowCount: number
   @Field()
   @Column()
-  lastName: string
+  columncount: number
   @Field({ nullable: true })
   @Column()
-  email: string
-  @Field({nullable: true})
-  @Column()
-  phonenr: string
+  agency: string
 }
