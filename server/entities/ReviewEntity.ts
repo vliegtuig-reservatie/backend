@@ -12,9 +12,9 @@ import { Flight } from './FlightEntity'
 import { User } from './UserEntity'
 
 @ObjectType()
-@InputType('SeatInput')
-@Entity('Seats')
-export class Seat extends BaseEntity {
+@InputType('ReviewInput')
+@Entity('Reviews')
+export class Review extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
   @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
   id?: ObjectID
