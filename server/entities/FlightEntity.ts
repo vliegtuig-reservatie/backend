@@ -40,4 +40,10 @@ export class Flight extends BaseEntity {
   @Field({ nullable: true })
   @Column()
   stops: Airport[]
+  @Field({ nullable: true })
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  createdAt?: Date
+  @Field({ nullable: true })
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updatedAt?: Date
 }

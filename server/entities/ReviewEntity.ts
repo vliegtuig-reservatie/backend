@@ -30,4 +30,10 @@ export class Seat extends BaseEntity {
   @Field({ nullable: true })
   @Column()
   note: string
+  @Field({ nullable: true })
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  createdAt?: Date
+  @Field({ nullable: true })
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updatedAt?: Date
 }

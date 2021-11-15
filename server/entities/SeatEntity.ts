@@ -2,11 +2,9 @@ import { Field, ID, InputType, Int, ObjectType } from 'type-graphql'
 import {
   BaseEntity,
   Column,
-  CreateDateColumn,
   Entity,
   ObjectID,
   ObjectIdColumn,
-  UpdateDateColumn,
 } from 'typeorm'
 import { User } from './UserEntity'
 
