@@ -5,7 +5,7 @@ import { Seat } from '../entities/SeatEntity'
 
 @Resolver()
 export class FlightResolver {
-  manager: MongoEntityManager = getMongoManager()
+  manager: MongoEntityManager = getMongoManager('mongodb')
 
   @Query(() => [Flight], { nullable: true })
   async getFlights(): Promise<Flight[]> {

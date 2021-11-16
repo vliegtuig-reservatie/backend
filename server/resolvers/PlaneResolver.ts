@@ -4,7 +4,7 @@ import { Plane } from '../entities/PlaneEntity'
 
 @Resolver()
 export class PlaneResolver {
-  manager: MongoEntityManager = getMongoManager()
+  manager: MongoEntityManager = getMongoManager('mongodb')
 
   @Query(() => [Plane], { nullable: true })
   async getPlanes(): Promise<Plane[]> {

@@ -4,7 +4,7 @@ import { Review } from '../entities/ReviewEntity'
 
 @Resolver()
 export class ReviewResolver {
-  manager: MongoEntityManager = getMongoManager()
+  manager: MongoEntityManager = getMongoManager('mongodb')
 
   @Query(() => [Review], { nullable: true })
   async getReviews(): Promise<Review[]> {

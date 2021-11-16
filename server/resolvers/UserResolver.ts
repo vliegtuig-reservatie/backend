@@ -4,7 +4,7 @@ import { User } from '../entities/UserEntity'
 
 @Resolver()
 export class UserResolver {
-  manager: MongoEntityManager = getMongoManager()
+  manager: MongoEntityManager = getMongoManager('mongodb')
 
   @Query(() => [User], { nullable: true })
   async getUsers(): Promise<User[]> {

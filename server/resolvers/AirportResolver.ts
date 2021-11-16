@@ -4,7 +4,7 @@ import { Airport } from '../entities/AirportEntity'
 
 @Resolver()
 export class AirportResolver {
-  manager: MongoEntityManager = getMongoManager()
+  manager: MongoEntityManager = getMongoManager('mongodb')
 
   @Query(() => [Airport], { nullable: true })
   async getAirports(): Promise<Airport[]> {
