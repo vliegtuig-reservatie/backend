@@ -30,7 +30,6 @@ app.use(express.json()) // for parsing application/json
     useUnifiedTopology: true,
     //entities: [`${__dirname}/entities/*{.ts,.js}`],
     entities: [TestEntity, User],
-    ssl: false, // false for local dev.
   }
 
   await createConnection(conn).catch(ex => console.log(ex))
