@@ -19,7 +19,7 @@ export class Airport extends BaseEntity {
   name: string
   @Field()
   @Column()
-  JATACode: string
+  IATACode: string
   @Field({ nullable: true })
   @Column()
   latitude: number

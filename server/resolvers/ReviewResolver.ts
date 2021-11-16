@@ -19,6 +19,14 @@ export class ReviewResolver {
     return res
   }
 
+  @Query(() => [Review], { nullable: true })
+  async getReviewsByStars(
+    @Arg('stars') stars: number,
+  ): Promise<Review[] | undefined | null> {
+    const res = await this.manager.find<Review>(Review, { stars: stars })
+    return res
+  }
+
   @Mutation(() => Review, { nullable: true })
   async createReview(@Arg('data') newReviewData: Review): Promise<Review> {
     const review: Review = await this.manager.create(Review, newReviewData)
@@ -26,6 +34,3 @@ export class ReviewResolver {
     return review
   }
 }
-
-
-// getReviewsByStars

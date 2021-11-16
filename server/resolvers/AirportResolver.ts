@@ -19,6 +19,14 @@ export class AirportResolver {
     return res
   }
 
+  @Query(() => Airport, { nullable: true })
+  async getAirportByIATA(
+    @Arg('iatacode') iatacode: string,
+  ): Promise<Airport | undefined | null> {
+    const res = await this.manager.findOne<Airport>(Airport, { IATACode: iatacode })
+    return res
+  }
+
   @Mutation(() => Airport, { nullable: true })
   async createAirport(@Arg('data') newAirportData: Airport): Promise<Airport> {
     const airport: Airport = await this.manager.create(Airport, newAirportData)
@@ -26,6 +34,3 @@ export class AirportResolver {
     return airport
   }
 }
-
-
-// getAirportByJATACode
