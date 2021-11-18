@@ -3,9 +3,11 @@ import {
   BaseEntity,
   Column,
   Entity,
+  ManyToOne,
   ObjectID,
   ObjectIdColumn,
 } from 'typeorm'
+import { Flight } from './FlightEntity'
 import { User } from './UserEntity'
 
 @ObjectType()
@@ -21,7 +23,10 @@ export class Seat extends BaseEntity {
   @Field()
   @Column()
   column: number
-  @Field({ nullable: true })
-  @Column()
+  @Field(()=>User)
+  @ManyToOne(() => User, user => user.reviews)
   passager: User
+  @Field(()=>[Seat],{ nullable: true })
+  @ManyToOne(type => Flight, flight => flight.bookedSeats) 
+  flight: Flight[]
 }

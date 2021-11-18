@@ -7,8 +7,6 @@ import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
 import { UserResolver } from './resolvers/UserResolver'
 import { GraphQLSchema } from 'graphql'
-import { TestEntityResolver } from './resolvers/TestResolver'
-import { TestEntity } from './entities/TestEntity'
 import { User } from './entities/UserEntity'
 
 // APP SETUP
@@ -25,16 +23,13 @@ app.use(express.json()) // for parsing application/json
     type: 'mongodb',
     url: 'mongodb+srv://docent:Password@jetlistcluster.ngz7b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', // Url to the database eg. mongodb://myDBReader:D1fficultP%40ssw0rd@mongodb0.example.com:27017/?authSource=admin
     useNewUrlParser: true,
-    synchronize: true,
     logging: true,
     useUnifiedTopology: true,
-    //entities: [`${__dirname}/entities/*{.ts,.js}`],
-    entities: [TestEntity, User],
+    entities: [`${__dirname}/entities/*{.ts,.js}`],
+    //entities: [TestEntity, User],
   }
 
   await createConnection(conn).catch(ex => console.log(ex))
-  console.log(conn)
-
   // ROUTES
   app.get('/', (request: Request, response: Response) => {
     response.send(`Welcome, just know: you matter!`)
@@ -47,7 +42,7 @@ app.use(express.json()) // for parsing application/json
   let schema: GraphQLSchema = {} as GraphQLSchema
   const createSchema = async () => {
     await buildSchema({
-      resolvers: [UserResolver, TestEntityResolver],
+      resolvers: [`${__dirname}/resolvers/*{.ts,.js}`],
     }).then(_ => {
       schema = _
     })
@@ -67,7 +62,5 @@ app.use(express.json()) // for parsing application/json
     console.info(`\nWelcome 👋\nGraphQL server @ http://localhost:${port}/v1\n`)
   })
 
-  console.info(`test1`)
   createSchema()
-  console.info(`test2`)
 })()
