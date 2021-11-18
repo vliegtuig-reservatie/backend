@@ -43,3 +43,4 @@ export class FlightResolver {
 
 
 // addBookedSeat
+// findFlight // vlucht vinden op vertrek-, besteminglocaties en datum(s) / maybe vluchten ook vinden op aangevraagde stoelen zodat je geen vluchten ziet met te weinig stoelen

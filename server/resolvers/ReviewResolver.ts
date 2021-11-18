@@ -11,14 +11,6 @@ export class ReviewResolver {
     return await this.manager.find<Review>(Review)
   }
 
-  @Query(() => Review, { nullable: true })
-  async getReviewById(
-    @Arg('id') id: string,
-  ): Promise<Review | undefined | null> {
-    const res = await this.manager.findOne<Review>(Review, { id: id })
-    return res
-  }
-
   @Query(() => [Review], { nullable: true })
   async getReviewsByStars(
     @Arg('stars') stars: number,
@@ -34,3 +26,11 @@ export class ReviewResolver {
     return review
   }
 }
+
+
+// getReviewsForSimilarFlights // reviews tonen aan klanten waar de vlucht van dezelfde maatschapij is en de vertrek- tussenstop- en besteminglocaties hetzelfde is / bv dezelfde vlugt van gisteren
+// getReviewsByFlight
+// getReviewsByFlightAndStars
+// getReviewsByUser
+
+// updateReview
