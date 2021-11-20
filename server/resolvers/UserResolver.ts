@@ -12,11 +12,8 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  async getUserById(
-    @Arg('id') id: string,
-  ): Promise<User | undefined | null> {
-    const res = await this.manager.findOne<User>(User, { id: id })
-    return res
+  async getUserById(@Arg('id') id: string): Promise<User | undefined | null> {
+    return await this.manager.findOne<User>(User, id)
   }
 
   @Mutation(() => User, { nullable: true })
