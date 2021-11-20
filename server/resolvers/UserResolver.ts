@@ -16,6 +16,14 @@ export class UserResolver {
     return await this.manager.findOne<User>(User, id)
   }
 
+  @Query(() => User, { nullable: true })
+  async getUserByUuid(
+    @Arg('uuid') uuid: string,
+  ): Promise<User | undefined | null> {
+    const res = await this.manager.findOne<User>(User, { uuid: uuid })
+    return res
+  }
+
   @Mutation(() => User, { nullable: true })
   async createUser(@Arg('data') newUserData: User): Promise<User> {
     const user: User = await this.manager.create(User, newUserData)

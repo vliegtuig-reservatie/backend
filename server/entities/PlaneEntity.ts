@@ -29,8 +29,8 @@ export class Plane extends BaseEntity {
   @Field({ nullable: true })
   @Column()
   agency: string
-  
-  @Field(()=>[Flight],{ nullable: true })
-  @OneToMany(() => Flight, flight => flight.plane) 
+
+  @Field(() => [Flight], { nullable: true })
+  @OneToMany(() => Flight, flight => flight.plane)
   flights: Flight[]
 }

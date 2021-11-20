@@ -32,27 +32,28 @@ export class Flight extends BaseEntity {
   @Column()
   arrivalTime: Date
 
-  @Field(()=>[Airport],{ nullable: true })
-  @ManyToOne(() => Airport, airport => airport.departureFlights) 
+  @Field(() => Airport, { nullable: true })
+  @ManyToOne(() => Airport, airport => airport.departureFlights)
   departureLocation: Airport
-  @Field(()=>Airport,{ nullable: true })
-  @ManyToOne(() => Airport, airport => airport.arrivalFlights) 
+  @Field(() => Airport, { nullable: true })
+  @ManyToOne(() => Airport, airport => airport.arrivalFlights)
   arrivalLocation: Airport
-  @Field(()=>[Airport],{ nullable: true })
-  @ManyToMany(() => Airport) @JoinTable()
+  @Field(() => [Airport], { nullable: true })
+  @ManyToMany(() => Airport)
+  @JoinTable()
   stops: Airport[]
 
-  @Field(()=>Plane,{ nullable: true })
-  @ManyToOne(() => Plane, plane => plane.flights) 
+  @Field(() => Plane, { nullable: true })
+  @ManyToOne(() => Plane, plane => plane.flights)
   plane: Plane
-  @Field(()=>[Seat],{ nullable: true })
-  @OneToMany(() => Seat, seat => seat.flight) 
+  @Field(() => [Seat], { nullable: true })
+  @OneToMany(() => Seat, seat => seat.flight)
   bookedSeats: Seat[]
 
-  @Field(()=>[Review],{ nullable: true })
-  @OneToMany(() => Review, review => review.flight) 
+  @Field(() => [Review], { nullable: true })
+  @OneToMany(() => Review, review => review.flight)
   reviews: Review[]
-  
+
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date

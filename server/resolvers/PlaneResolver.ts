@@ -8,13 +8,11 @@ export class PlaneResolver {
 
   @Query(() => [Plane], { nullable: true })
   async getPlanes(): Promise<Plane[]> {
-    return await this.manager.find<Plane>(Plane)
+    return await this.manager.find<Plane>(Plane, { relations: ['flights'] })
   }
 
   @Query(() => Plane, { nullable: true })
-  async getPlaneById(
-    @Arg('id') id: string,
-  ): Promise<Plane | undefined | null> {
+  async getPlaneById(@Arg('id') id: string): Promise<Plane | undefined | null> {
     const res = await this.manager.findOne<Plane>(Plane, { id: id })
     return res
   }

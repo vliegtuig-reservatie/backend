@@ -9,7 +9,15 @@ export class FlightResolver {
 
   @Query(() => [Flight], { nullable: true })
   async getFlights(): Promise<Flight[]> {
-    return await this.manager.find<Flight>(Flight)
+    return await this.manager.find<Flight>(Flight, {
+      relations: [
+        'departureLocation',
+        'arrivalLocation',
+        'plane',
+        'bookedSeats',
+        'reviews',
+      ],
+    })
   }
 
   @Query(() => Flight, { nullable: true })
@@ -28,9 +36,14 @@ export class FlightResolver {
   }
 
   @Mutation(() => Flight, { nullable: true })
-  async addBookedSeat(@Arg('data') newSeatData: Seat, @Arg('flightId') flightId: string): Promise<Flight> {
+  async addBookedSeat(
+    @Arg('data') newSeatData: Seat,
+    @Arg('flightId') flightId: string,
+  ): Promise<Flight> {
     const seat: Seat = await this.manager.create(Seat, newSeatData)
-    const flight: Flight = await this.manager.findOne<Flight>(Flight, { id: flightId })
+    const flight: Flight = await this.manager.findOne<Flight>(Flight, {
+      id: flightId,
+    })
 
     flight.bookedSeats.push(seat)
 
@@ -40,7 +53,6 @@ export class FlightResolver {
     return flight
   }
 }
-
 
 // addBookedSeat
 // findFlight // vlucht vinden op vertrek-, besteminglocaties en datum(s) / maybe vluchten ook vinden op aangevraagde stoelen zodat je geen vluchten ziet met te weinig stoelen
