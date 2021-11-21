@@ -6,27 +6,28 @@ import {
   ManyToOne,
   ObjectID,
   ObjectIdColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Flight } from './FlightEntity'
 import { User } from './UserEntity'
 
 @ObjectType()
 @InputType('SeatInput')
-@Entity('Seats')
+@Entity('seats')
 export class Seat extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
   @Field()
   @Column()
   row: number
   @Field()
   @Column()
   column: number
-  @Field(()=>User)
+  @Field(() => User)
   @ManyToOne(() => User, user => user.reviews)
   passager: User
-  @Field(()=>[Seat],{ nullable: true })
-  @ManyToOne(type => Flight, flight => flight.bookedSeats) 
+  @Field(() => [Seat], { nullable: true })
+  @ManyToOne(type => Flight, flight => flight.bookedSeats)
   flight: Flight[]
 }

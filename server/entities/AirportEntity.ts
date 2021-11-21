@@ -8,16 +8,17 @@ import {
   ObjectID,
   ObjectIdColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Flight } from './FlightEntity'
 
 @ObjectType()
 @InputType('AirportInput')
-@Entity('Airports')
+@Entity('airports')
 export class Airport extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
 
   @Field()
   @Column()
@@ -27,24 +28,25 @@ export class Airport extends BaseEntity {
   IATACode: string
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   latitude: number
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   longitude: number
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   timeZone: string
 
-  @Field(()=>[Flight],{ nullable: true })
-  @ManyToMany(type => Flight) @JoinTable()
+  @Field(() => [Flight], { nullable: true })
+  @ManyToMany(type => Flight)
+  @JoinTable()
   stoppingFlights: Flight[]
 
-  @Field(()=>[Flight],{ nullable: true })
+  @Field(() => [Flight], { nullable: true })
   @OneToMany(() => Flight, flight => flight.departureLocation)
   departureFlights
-  
-  @Field(()=>[Flight],{ nullable: true })
+
+  @Field(() => [Flight], { nullable: true })
   @OneToMany(() => Flight, flight => flight.arrivalLocation)
   arrivalFlights
 }

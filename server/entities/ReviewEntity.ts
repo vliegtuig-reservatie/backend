@@ -7,6 +7,7 @@ import {
   ManyToOne,
   ObjectID,
   ObjectIdColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Flight } from './FlightEntity'
@@ -14,27 +15,27 @@ import { User } from './UserEntity'
 
 @ObjectType()
 @InputType('ReviewInput')
-@Entity('Reviews')
+@Entity('reviews')
 export class Review extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
 
-  @Field(()=>User)
+  @Field(() => User)
   @ManyToOne(() => User, user => user.reviews)
   user: User
 
-  @Field(()=>Flight)
-  @ManyToOne(() => Flight, flight => flight.reviews) 
+  @Field(() => Flight)
+  @ManyToOne(() => Flight, flight => flight.reviews)
   flight: Flight
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   stars: number
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   note: string
-  
+
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date

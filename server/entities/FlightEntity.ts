@@ -10,6 +10,7 @@ import {
   ObjectID,
   ObjectIdColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Plane } from './PlaneEntity'
@@ -19,17 +20,17 @@ import { Review } from './ReviewEntity'
 
 @ObjectType()
 @InputType('FlightInput')
-@Entity('Flights')
+@Entity('flights')
 export class Flight extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   departureTime: Date
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   arrivalTime: Date
 
   @Field(() => Airport, { nullable: true })
@@ -61,6 +62,6 @@ export class Flight extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt?: Date
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   canceledAt?: Boolean
 }

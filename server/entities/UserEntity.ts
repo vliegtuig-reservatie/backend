@@ -6,17 +6,18 @@ import {
   ObjectID,
   ObjectIdColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Review } from './ReviewEntity'
 import { Seat } from './SeatEntity'
 
 @ObjectType()
 @InputType('UserInput')
-@Entity('Users')
+@Entity('users')
 export class User extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
   @Field({ nullable: true })
   @Column()
   uuid?: string
@@ -27,10 +28,10 @@ export class User extends BaseEntity {
   @Column()
   lastName: string
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   email: string
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   phonenr: string
 
   @Field(() => [Review], { nullable: true })

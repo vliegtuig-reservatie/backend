@@ -1,21 +1,26 @@
 import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql'
-import { getMongoManager, MongoEntityManager } from 'typeorm'
+import {
+  getMongoManager,
+  getRepository,
+  MongoEntityManager,
+  Repository,
+} from 'typeorm'
 import { Airport } from '../entities/AirportEntity'
 
 @Resolver()
 export class AirportResolver {
-  manager: MongoEntityManager = getMongoManager('mongodb')
+  repository: Repository<Airport> = getRepository(Airport)
 
   @Query(() => [Airport], { nullable: true })
   async getAirports(): Promise<Airport[]> {
-    return await this.manager.find<Airport>(Airport)
+    return await this.repository.find()
   }
 
   @Query(() => Airport, { nullable: true })
   async getAirportById(
     @Arg('id') id: string,
   ): Promise<Airport | undefined | null> {
-    const res = await this.manager.findOne<Airport>(Airport, { id: id })
+    const res = await this.repository.findOne({ where: { id: id } })
     return res
   }
 
@@ -23,14 +28,18 @@ export class AirportResolver {
   async getAirportByIATA(
     @Arg('iatacode') iatacode: string,
   ): Promise<Airport | undefined | null> {
-    const res = await this.manager.findOne<Airport>(Airport, { IATACode: iatacode })
+    const res = await this.repository.findOne({
+      where: {
+        IATACode: iatacode,
+      },
+    })
     return res
   }
 
   @Mutation(() => Airport, { nullable: true })
   async createAirport(@Arg('data') newAirportData: Airport): Promise<Airport> {
-    const airport: Airport = await this.manager.create(Airport, newAirportData)
-    this.manager.save(airport)
+    const airport: Airport = await this.repository.create(newAirportData)
+    this.repository.save(airport)
     return airport
   }
 }

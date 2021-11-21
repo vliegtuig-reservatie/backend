@@ -8,16 +8,17 @@ import {
   ObjectID,
   ObjectIdColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Flight } from './FlightEntity'
 
 @ObjectType()
 @InputType('PlaneInput')
-@Entity('Planes')
+@Entity('planes')
 export class Plane extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
-  @ObjectIdColumn() //Special decorator, to tell that this collumn represent an unique generated ID
-  id?: ObjectID
+  @PrimaryGeneratedColumn('uuid')
+  id?: string
 
   @Field()
   @Column()
@@ -27,7 +28,7 @@ export class Plane extends BaseEntity {
   columncount: number
 
   @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   agency: string
 
   @Field(() => [Flight], { nullable: true })
