@@ -22,11 +22,15 @@ export class Review extends BaseEntity {
   id?: string
 
   @Field(() => User)
-  @ManyToOne(() => User, user => user.reviews)
+  @ManyToOne(() => User, user => user.reviews, {
+    createForeignKeyConstraints: false,
+  })
   user: User
 
   @Field(() => Flight)
-  @ManyToOne(() => Flight, flight => flight.reviews)
+  @ManyToOne(() => Flight, flight => flight.reviews, {
+    createForeignKeyConstraints: false,
+  })
   flight: Flight
 
   @Field({ nullable: true })

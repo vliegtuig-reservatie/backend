@@ -34,10 +34,14 @@ export class Flight extends BaseEntity {
   arrivalTime: Date
 
   @Field(() => Airport, { nullable: true })
-  @ManyToOne(() => Airport, airport => airport.departureFlights)
+  @ManyToOne(() => Airport, airport => airport.departureFlights, {
+    createForeignKeyConstraints: false,
+  })
   departureLocation: Airport
   @Field(() => Airport, { nullable: true })
-  @ManyToOne(() => Airport, airport => airport.arrivalFlights)
+  @ManyToOne(() => Airport, airport => airport.arrivalFlights, {
+    createForeignKeyConstraints: false,
+  })
   arrivalLocation: Airport
   @Field(() => [Airport], { nullable: true })
   @ManyToMany(() => Airport)
@@ -45,7 +49,9 @@ export class Flight extends BaseEntity {
   stops: Airport[]
 
   @Field(() => Plane, { nullable: true })
-  @ManyToOne(() => Plane, plane => plane.flights)
+  @ManyToOne(() => Plane, plane => plane.flights, {
+    createForeignKeyConstraints: false,
+  })
   plane: Plane
   @Field(() => [Seat], { nullable: true })
   @OneToMany(() => Seat, seat => seat.flight)
