@@ -21,14 +21,6 @@ export class UserResolver {
     return await this.repository.findOne(id)
   }
 
-  @Query(() => User, { nullable: true })
-  async getUserByUuid(
-    @Arg('uuid') uuid: string,
-  ): Promise<User | undefined | null> {
-    const res = await this.repository.findOne({ where: { uuid: uuid } })
-    return res
-  }
-
   @Mutation(() => User, { nullable: true })
   async createUser(@Arg('data') newUserData: User): Promise<User> {
     const user: User = await this.repository.create(newUserData)
