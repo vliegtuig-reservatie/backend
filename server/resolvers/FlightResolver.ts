@@ -7,11 +7,13 @@ import {
 } from 'typeorm'
 import { Flight } from '../entities/FlightEntity'
 import { Seat } from '../entities/SeatEntity'
+import { User } from '../entities/UserEntity'
 
 @Resolver()
 export class FlightResolver {
   repository: Repository<Flight> = getRepository(Flight)
   seatRepository: Repository<Seat> = getRepository(Seat)
+  userRepository: Repository<User> = getRepository(User)
 
   @Query(() => [Flight], { nullable: true })
   async getFlights(): Promise<Flight[]> {
@@ -22,6 +24,7 @@ export class FlightResolver {
         'plane',
         'bookedSeats',
         'reviews',
+        'bookedSeats.passager'
       ],
     })
   }
@@ -30,7 +33,13 @@ export class FlightResolver {
   async getFlightById(
     @Arg('id') id: string,
   ): Promise<Flight | undefined | null> {
-    const res = await this.repository.findOne({ where: { id: id } })
+    const res = await this.repository.findOne({ where: { id: id },relations: [
+      'departureLocation',
+      'arrivalLocation',
+      'plane',
+      'bookedSeats',
+      'reviews',
+    ],})
     return res
   }
 
@@ -45,6 +54,7 @@ export class FlightResolver {
   async addBookedSeat(
     @Arg('data') newSeatData: Seat,
     @Arg('flightId') flightId: string,
+    @Arg('userId') userId: string
   ): Promise<Flight> {
     const seat: Seat = await this.seatRepository.create(newSeatData)
     const flight: Flight = await this.repository.findOne({
@@ -52,13 +62,29 @@ export class FlightResolver {
         id: flightId,
       },
     })
+    const user: User = await this.userRepository.findOne({
+      where: {
+        id: userId,
+      },
+    })
+    
+    if (flight.bookedSeats == undefined) {
+      flight.bookedSeats = []
+    }
 
-    flight.bookedSeats.push(seat)
+    seat.flight = flight
+    seat.passager = user
+    //flight.bookedSeats.push(seat)
 
     this.repository.save(seat)
-    this.repository.save(flight)
+    //this.repository.save(flight)
 
-    return flight
+    const flightfresh: Flight = await this.repository.findOne({
+      where: {
+        id: flightId,
+      },
+    })
+    return flightfresh
   }
 }
 

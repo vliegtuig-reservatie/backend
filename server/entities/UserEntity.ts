@@ -18,9 +18,7 @@ export class User extends BaseEntity {
   @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
   @PrimaryGeneratedColumn('uuid')
   id?: string
-  @Field({ nullable: true })
-  @Column()
-  uuid?: string
+
   @Field()
   @Column()
   firstName: string

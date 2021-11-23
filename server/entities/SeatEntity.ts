@@ -28,10 +28,10 @@ export class Seat extends BaseEntity {
   @ManyToOne(() => User, user => user.reviews, {
     createForeignKeyConstraints: false,
   })
-  passager: User
-  @Field(() => [Seat], { nullable: true })
+  passager?: User
+  @Field(() => Flight, { nullable: true })
   @ManyToOne(type => Flight, flight => flight.bookedSeats, {
     createForeignKeyConstraints: false,
   })
-  flight: Flight[]
+  flight: Flight
 }

@@ -13,14 +13,22 @@ export class ReviewResolver {
 
   @Query(() => [Review], { nullable: true })
   async getReviews(): Promise<Review[]> {
-    return await this.repository.find()
+    return await this.repository.find({
+      relations: [
+        'user',
+        'flight',
+      ],
+    })
   }
 
   @Query(() => [Review], { nullable: true })
   async getReviewsByStars(
     @Arg('stars') stars: number,
   ): Promise<Review[] | undefined | null> {
-    const res = await this.repository.find({ where: { stars: stars } })
+    const res = await this.repository.find({ where: { stars: stars },relations: [
+      'user',
+      'flight',
+    ], })
     return res
   }
 
