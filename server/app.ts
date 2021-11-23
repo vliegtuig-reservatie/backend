@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import {
+  Connection,
   ConnectionOptions,
   createConnection,
   getConnectionOptions,
@@ -10,12 +11,14 @@ import { createDatabase } from 'typeorm-extension'
 import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
 import { GraphQLSchema } from 'graphql'
+import seedDatabase from './seeders/seeder'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
     .then(() => console.log('Database created successfully!'))
     .then(createConnection)
-    .then(async () => {
+    .then(async (connection: Connection) => {
+      seedDatabase(connection)
       // APP SETUP
       const app = express(),
         port = process.env.PORT || 8888

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fb6106bb-4b07-11ec-b829-0242ac1b0003",
+    "departureTime": "2021-11-20T20:36:00.000Z",
+    "arrivalTime": "2021-11-21T04:12:00.000Z",
+    "departureLocation": {
+      "id": "bfa8264e-4c4d-11ec-81d3-0242ac130003"
+    },
+    "arrivalLocation": {
+      "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
+    },
+    "plane": {
+      "id": "c9850588-4c4d-11ec-81d3-0242ac130003"
+    }
+  },
+  {
+    "id": "563d7ac0-4c51-11ec-81d3-0242ac130003",
+    "departureTime": "2021-11-23T14:13:00.000Z",
+    "arrivalTime": "2021-11-23T15:24:00.000Z",
+    "departureLocation": {
+      "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
+    },
+    "arrivalLocation": {
+      "id": "bfa8264e-4c4d-11ec-81d3-0242ac130003"
+    },
+    "plane": {
+      "id": "53995c58-9edc-43c3-95c3-99b5ca3e4040"
+    }
+  }
+]

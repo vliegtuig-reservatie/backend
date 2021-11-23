@@ -17,17 +17,17 @@ import { User } from './UserEntity'
 @InputType('ReviewInput')
 @Entity('reviews')
 export class Review extends BaseEntity {
-  @Field(() => ID, { nullable: true }) //Field decorator, represent a Graphql field of our graphql object type
+  @Field(() => ID, { nullable: true })
   @PrimaryGeneratedColumn('uuid')
   id?: string
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true }) // deze user relation werkt niet, komt uit op null als je reviews opvraagt
   @ManyToOne(() => User, user => user.reviews, {
     createForeignKeyConstraints: false,
   })
   user: User
 
-  @Field(() => Flight)
+  @Field(() => Flight, { nullable: true }) // deze flight relation werkt niet, komt uit op null als je reviews opvraagt
   @ManyToOne(() => Flight, flight => flight.reviews, {
     createForeignKeyConstraints: false,
   })

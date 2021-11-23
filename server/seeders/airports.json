@@ -1,0 +1,12 @@
+[
+  {
+    "id": "bfa8264e-4c4d-11ec-81d3-0242ac130003",
+    "name": "New York Airport",
+    "IATACode": "JFK"
+  },
+  {
+    "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003",
+    "name": "Paris Airport",
+    "IATACode": "CDG"
+  }
+]
