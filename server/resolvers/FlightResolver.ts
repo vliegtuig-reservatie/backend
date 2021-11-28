@@ -82,7 +82,7 @@ export class FlightResolver {
         where: {
           departureLocation: flightdata.arrivalLocation,
           arrivalLocation: flightdata.departureLocation,
-          departureTime: flightdata.departureTime
+          departureTime: flightdata.returnTime
         },
         relations: [
         'departureLocation',
