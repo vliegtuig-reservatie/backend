@@ -2,11 +2,14 @@ import { Arg, Authorized, Mutation, Query, Resolver } from 'type-graphql'
 import {
   getMongoManager,
   getRepository,
+  LessThan,
   MongoEntityManager,
+  MoreThan,
   Repository,
 } from 'typeorm'
 import { Flight } from '../entities/FlightEntity'
 import { Seat } from '../entities/SeatEntity'
+import { DoubleFlightQuery, FlightQuery, SeatQuery } from '../entities/QueryEntities'
 import { User } from '../entities/UserEntity'
 
 @Resolver()
@@ -43,6 +46,64 @@ export class FlightResolver {
     return res
   }
 
+  @Query(() => DoubleFlightQuery, { nullable: true })
+  async findFlight(
+    @Arg('data') flightdata: FlightQuery,
+    @Arg('doubleFlight') doubleFlight: boolean,
+    @Arg('seats') requestedSeats: number
+  ): Promise<DoubleFlightQuery | undefined | null> {
+    const res =  new DoubleFlightQuery
+
+    let filteredDepartureFlight: Flight[]
+    const departureFlight = await this.repository.find({
+      where: {
+        departureLocation: flightdata.departureLocation,
+        arrivalLocation: flightdata.arrivalLocation,
+        departureTime: flightdata.departureTime
+      },
+      relations: [
+      'departureLocation',
+      'arrivalLocation',
+      'plane',
+      'bookedSeats',
+      'reviews',
+    ],})
+
+    departureFlight.forEach(i => {
+      if (i.bookedSeats.length <= ((i.plane.rowCount * i.plane.columncount) - requestedSeats)) {
+        filteredDepartureFlight.push(i)
+      }
+    });
+
+    res.departureFlights = departureFlight
+
+    if (doubleFlight) {
+      const returnFlight = await this.repository.find({
+        where: {
+          departureLocation: flightdata.arrivalLocation,
+          arrivalLocation: flightdata.departureLocation,
+          departureTime: flightdata.departureTime
+        },
+        relations: [
+        'departureLocation',
+        'arrivalLocation',
+        'plane',
+        'bookedSeats',
+        'reviews',
+      ],})
+
+      departureFlight.forEach(i => {
+        if (i.bookedSeats.length <= ((i.plane.rowCount * i.plane.columncount) - requestedSeats)) {
+          filteredDepartureFlight.push(i)
+        }
+      });
+
+      res.returnFlights = returnFlight
+    }
+
+    return res
+  }
+
   @Mutation(() => Flight, { nullable: true })
   async createFlight(@Arg('data') newFlightData: Flight): Promise<Flight> {
     const flight: Flight = await this.repository.create(newFlightData)
@@ -50,12 +111,12 @@ export class FlightResolver {
     return flight
   }
 
-  @Mutation(() => Flight, { nullable: true })
+  @Mutation(() => Seat, { nullable: true })
   async addBookedSeat(
-    @Arg('data') newSeatData: Seat,
+    @Arg('data') newSeatData: SeatQuery,
     @Arg('flightId') flightId: string,
     @Arg('userId') userId: string
-  ): Promise<Flight> {
+  ): Promise<Seat> {
     const seat: Seat = await this.seatRepository.create(newSeatData)
     const flight: Flight = await this.repository.findOne({
       where: {
@@ -67,26 +128,14 @@ export class FlightResolver {
         id: userId,
       },
     })
-    
-    if (flight.bookedSeats == undefined) {
-      flight.bookedSeats = []
-    }
 
     seat.flight = flight
     seat.passager = user
-    //flight.bookedSeats.push(seat)
 
-    this.repository.save(seat)
-    //this.repository.save(flight)
+    const savedseat = this.seatRepository.save(seat)
 
-    const flightfresh: Flight = await this.repository.findOne({
-      where: {
-        id: flightId,
-      },
-    })
-    return flightfresh
+    return savedseat
   }
 }
 
-// addBookedSeat
 // findFlight // vlucht vinden op vertrek-, besteminglocaties en datum(s) / maybe vluchten ook vinden op aangevraagde stoelen zodat je geen vluchten ziet met te weinig stoelen

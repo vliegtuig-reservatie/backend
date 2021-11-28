@@ -68,6 +68,6 @@ export class Flight extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt?: Date
   @Field({ nullable: true })
-  @Column({ nullable: true })
-  canceledAt?: Boolean
+  @Column({ type: 'timestamp', nullable: true })
+  canceledAt?: Date
 }
