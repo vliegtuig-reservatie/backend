@@ -42,4 +42,20 @@ export class AirportResolver {
     this.repository.save(airport)
     return airport
   }
+
+  @Mutation(() => Airport, { nullable: true })
+  async updateAirport(
+    @Arg('data') newAirportData: Airport,
+    @Arg('id') id: string
+  ): Promise<Airport> {
+    const airport: Airport = await this.repository.findOne(id)
+
+    airport.name = newAirportData.name
+    airport.IATACode = newAirportData.IATACode
+    airport.latitude = newAirportData.latitude
+    airport.longitude = newAirportData.longitude
+
+    this.repository.save(airport)
+    return airport
+  }
 }

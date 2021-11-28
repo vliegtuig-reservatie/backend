@@ -66,6 +66,20 @@ export class ReviewResolver {
     this.repository.save(review)
     return review
   }
+
+  @Mutation(() => Review, { nullable: true })
+  async updateReview(
+    @Arg('data') newReviewData: Review,
+    @Arg('id') id: string
+  ): Promise<Review> {
+    const review: Review = await this.repository.findOne(id)
+
+    review.stars = newReviewData.stars
+    review.note = newReviewData.note
+
+    this.repository.save(review)
+    return review
+  }
 }
 
 // getReviewsForSimilarFlights // reviews tonen aan klanten waar de vlucht van dezelfde maatschapij is en de vertrek- tussenstop- en besteminglocaties hetzelfde is / bv dezelfde vlugt van gisteren

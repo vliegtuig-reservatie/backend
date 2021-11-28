@@ -136,6 +136,23 @@ export class FlightResolver {
 
     return savedseat
   }
+
+  @Mutation(() => Flight, { nullable: true })
+  async updateFlight(
+    @Arg('data') newFlightData: Flight,
+    @Arg('id') id: string
+  ): Promise<Flight> {
+    const flight: Flight = await this.repository.findOne(id)
+
+    flight.departureTime = newFlightData.departureTime
+    flight.arrivalTime = newFlightData.arrivalTime
+    flight.departureLocation = newFlightData.departureLocation
+    flight.arrivalLocation = newFlightData.arrivalLocation
+    flight.stops = newFlightData.stops
+
+    this.repository.save(flight)
+    return flight
+  }
 }
 
 // findFlight // vlucht vinden op vertrek-, besteminglocaties en datum(s) / maybe vluchten ook vinden op aangevraagde stoelen zodat je geen vluchten ziet met te weinig stoelen

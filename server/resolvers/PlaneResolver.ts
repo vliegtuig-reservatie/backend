@@ -28,4 +28,19 @@ export class PlaneResolver {
     this.repository.save(plane)
     return plane
   }
+
+  @Mutation(() => Plane, { nullable: true })
+  async updatePlane(
+    @Arg('data') newPlaneData: Plane,
+    @Arg('id') id: string
+  ): Promise<Plane> {
+    const plane: Plane = await this.repository.findOne(id)
+
+    plane.rowCount = newPlaneData.rowCount
+    plane.columncount = newPlaneData.columncount
+    plane.agency = newPlaneData.agency
+
+    this.repository.save(plane)
+    return plane
+  }
 }
