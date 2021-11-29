@@ -25,8 +25,8 @@ export class PlaneResolver {
   @Mutation(() => Plane, { nullable: true })
   async createPlane(@Arg('data') newPlaneData: Plane): Promise<Plane> {
     const plane: Plane = await this.repository.create(newPlaneData)
-    this.repository.save(plane)
-    return plane
+    const res = this.repository.save(plane)
+    return res
   }
 
   @Mutation(() => Plane, { nullable: true })
@@ -40,7 +40,17 @@ export class PlaneResolver {
     plane.columncount = newPlaneData.columncount
     plane.agency = newPlaneData.agency
 
-    this.repository.save(plane)
+    const res = this.repository.save(plane)
+    return res
+  }
+
+  @Mutation(() => Plane, { nullable: true })
+  async deletePlane(
+    @Arg('id') id: string
+  ): Promise<Plane> {
+    const plane: Plane = await this.repository.findOne({ where: { id: id } })
+
+    this.repository.remove(plane)
     return plane
   }
 }

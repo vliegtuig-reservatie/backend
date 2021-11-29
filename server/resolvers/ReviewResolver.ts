@@ -63,8 +63,8 @@ export class ReviewResolver {
   @Mutation(() => Review, { nullable: true })
   async createReview(@Arg('data') newReviewData: Review): Promise<Review> {
     const review: Review = await this.repository.create(newReviewData)
-    this.repository.save(review)
-    return review
+    const res = this.repository.save(review)
+    return res
   }
 
   @Mutation(() => Review, { nullable: true })
@@ -72,12 +72,27 @@ export class ReviewResolver {
     @Arg('data') newReviewData: Review,
     @Arg('id') id: string
   ): Promise<Review> {
-    const review: Review = await this.repository.findOne(id)
+    const review: Review = await this.repository.findOne({ where: { id: id },
+      relations: [
+        'user',
+        'flight',
+      ]
+    })
 
     review.stars = newReviewData.stars
     review.note = newReviewData.note
 
-    this.repository.save(review)
+    const res = this.repository.save(review)
+    return res
+  }
+
+  @Mutation(() => Review, { nullable: true })
+  async deleteReview(
+    @Arg('id') id: string
+  ): Promise<Review> {
+    const review: Review = await this.repository.findOne({ where: { id: id } })
+
+    this.repository.remove(review)
     return review
   }
 }

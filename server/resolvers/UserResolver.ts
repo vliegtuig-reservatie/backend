@@ -13,21 +13,31 @@ export class UserResolver {
 
   @Query(() => [User], { nullable: true })
   async getUsers(): Promise<User[]> {
-    return await this.repository.find({ relations: ['reviews', 'bookedSeats'] })
+    return await this.repository.find({ 
+      relations: [
+        'reviews',
+        'bookedSeats'
+      ]
+    })
   }
 
   @Query(() => User, { nullable: true })
   async getUserById(
     @Arg('id') id: string
   ): Promise<User | undefined | null> {
-    return await this.repository.findOne(id)
+    return await this.repository.findOne({where: { id: id },
+      relations: [
+        'reviews',
+        'bookedSeats',
+      ]
+    })
   }
 
   @Mutation(() => User, { nullable: true })
   async createUser(@Arg('data') newUserData: User): Promise<User> {
     const user: User = await this.repository.create(newUserData)
-    this.repository.save(user)
-    return user
+    const res = this.repository.save(user)
+    return res
   }
 
   @Mutation(() => User, { nullable: true })
@@ -35,16 +45,35 @@ export class UserResolver {
     @Arg('data') newUserData: User,
     @Arg('id') id: string
   ): Promise<User> {
-    const user: User = await this.repository.findOne(id)
+    const user: User = await this.repository.findOne({ where: { id: id },
+      relations: [
+        'reviews',
+        'bookedSeats',
+      ]
+    })
 
     user.firstName = newUserData.firstName
     user.lastName = newUserData.lastName
     user.email = newUserData.email
     user.phonenr = newUserData.phonenr
 
-    this.repository.save(user)
+    const res = this.repository.save(user)
+    return res
+  }
+
+  @Mutation(() => User, { nullable: true })
+  async deleteUser(
+    @Arg('id') id: string
+  ): Promise<User> {
+    const user: User = await this.repository.findOne({ where: { id: id },
+      relations: [
+        'reviews',
+        'bookedSeats',
+      ]
+    })
+
+    this.repository.remove(user)
     return user
   }
 }
 
-// updateUser

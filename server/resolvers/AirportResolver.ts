@@ -13,14 +13,26 @@ export class AirportResolver {
 
   @Query(() => [Airport], { nullable: true })
   async getAirports(): Promise<Airport[]> {
-    return await this.repository.find()
+    return await this.repository.find({
+      relations: [
+        'departureFlights',
+        'departureFlights.arrivalLocation',
+        'departureFlights.plane',
+      ]
+    })
   }
 
   @Query(() => Airport, { nullable: true })
   async getAirportById(
     @Arg('id') id: string,
   ): Promise<Airport | undefined | null> {
-    const res = await this.repository.findOne({ where: { id: id } })
+    const res = await this.repository.findOne({ where: { id: id },
+      relations: [
+        'departureFlights',
+        'departureFlights.arrivalLocation',
+        'departureFlights.plane',
+      ]
+    })
     return res
   }
 
@@ -32,6 +44,11 @@ export class AirportResolver {
       where: {
         IATACode: iatacode,
       },
+        relations: [
+          'departureFlights',
+          'departureFlights.arrivalLocation',
+          'departureFlights.plane',
+        ]
     })
     return res
   }
@@ -39,8 +56,8 @@ export class AirportResolver {
   @Mutation(() => Airport, { nullable: true })
   async createAirport(@Arg('data') newAirportData: Airport): Promise<Airport> {
     const airport: Airport = await this.repository.create(newAirportData)
-    this.repository.save(airport)
-    return airport
+    const res = this.repository.save(airport)
+    return res
   }
 
   @Mutation(() => Airport, { nullable: true })
@@ -48,14 +65,30 @@ export class AirportResolver {
     @Arg('data') newAirportData: Airport,
     @Arg('id') id: string
   ): Promise<Airport> {
-    const airport: Airport = await this.repository.findOne(id)
+    const airport: Airport = await this.repository.findOne({ where: { id: id },
+      relations: [
+        'departureFlights',
+        'departureFlights.arrivalLocation',
+        'departureFlights.plane',
+      ]
+    })
 
     airport.name = newAirportData.name
     airport.IATACode = newAirportData.IATACode
     airport.latitude = newAirportData.latitude
     airport.longitude = newAirportData.longitude
 
-    this.repository.save(airport)
+    const res = this.repository.save(airport)
+    return res
+  }
+
+  @Mutation(() => Airport, { nullable: true })
+  async deleteAirport(
+    @Arg('id') id: string
+  ): Promise<Airport> {
+    const airport: Airport = await this.repository.findOne({ where: { id: id } })
+
+    this.repository.remove(airport)
     return airport
   }
 }

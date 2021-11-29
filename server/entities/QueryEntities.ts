@@ -30,8 +30,8 @@ export class FlightQuery {
 @ObjectType()
 @InputType('DoubleFlightQueryInput')
 export class DoubleFlightQuery {
-  @Field()
+  @Field(() => Flight)
   departureFlights:Flight[]
-  @Field()
+  @Field(() => Flight)
   returnFlights:Flight[]
 }

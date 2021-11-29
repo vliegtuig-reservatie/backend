@@ -26,8 +26,8 @@ export class FlightResolver {
         'arrivalLocation',
         'plane',
         'bookedSeats',
+        'bookedSeats.passager',
         'reviews',
-        'bookedSeats.passager'
       ],
     })
   }
@@ -41,6 +41,7 @@ export class FlightResolver {
       'arrivalLocation',
       'plane',
       'bookedSeats',
+      'bookedSeats.passager',
       'reviews',
     ],})
     return res
@@ -55,7 +56,7 @@ export class FlightResolver {
     const res =  new DoubleFlightQuery
 
     let filteredDepartureFlight: Flight[]
-    const departureFlight = await this.repository.find({
+    const departureFlight: Flight[] = await this.repository.find({
       where: {
         departureLocation: flightdata.departureLocation,
         arrivalLocation: flightdata.arrivalLocation,
@@ -66,6 +67,7 @@ export class FlightResolver {
       'arrivalLocation',
       'plane',
       'bookedSeats',
+      'bookedSeats.passager',
       'reviews',
     ],})
 
@@ -78,7 +80,7 @@ export class FlightResolver {
     res.departureFlights = departureFlight
 
     if (doubleFlight) {
-      const returnFlight = await this.repository.find({
+      const returnFlight: Flight[] = await this.repository.find({
         where: {
           departureLocation: flightdata.arrivalLocation,
           arrivalLocation: flightdata.departureLocation,
@@ -89,6 +91,7 @@ export class FlightResolver {
         'arrivalLocation',
         'plane',
         'bookedSeats',
+        'bookedSeats.passager',
         'reviews',
       ],})
 
@@ -107,8 +110,8 @@ export class FlightResolver {
   @Mutation(() => Flight, { nullable: true })
   async createFlight(@Arg('data') newFlightData: Flight): Promise<Flight> {
     const flight: Flight = await this.repository.create(newFlightData)
-    this.repository.save(flight)
-    return flight
+    const res = this.repository.save(flight)
+    return res
   }
 
   @Mutation(() => Seat, { nullable: true })
@@ -150,7 +153,17 @@ export class FlightResolver {
     flight.arrivalLocation = newFlightData.arrivalLocation
     flight.stops = newFlightData.stops
 
-    this.repository.save(flight)
+    const res = this.repository.save(flight)
+    return res
+  }
+
+  @Mutation(() => Flight, { nullable: true })
+  async deleteFlight(
+    @Arg('id') id: string
+  ): Promise<Flight> {
+    const flight: Flight = await this.repository.findOne({ where: { id: id } })
+
+    this.repository.remove(flight)
     return flight
   }
 }
