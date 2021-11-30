@@ -62,6 +62,10 @@ export class Flight extends BaseEntity {
   reviews: Review[]
 
   @Field({ nullable: true })
+  @Column({ nullable: true })
+  price: number
+
+  @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })
   createdAt?: Date
   @Field({ nullable: true })
