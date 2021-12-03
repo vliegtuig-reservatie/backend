@@ -9,7 +9,11 @@ import {
 } from 'typeorm'
 import { Flight } from '../entities/FlightEntity'
 import { Seat } from '../entities/SeatEntity'
-import { DoubleFlightQuery, FlightQuery, SeatQuery } from '../entities/QueryEntities'
+import {
+  DoubleFlightQuery,
+  FlightQuery,
+  SeatQuery,
+} from '../entities/QueryEntities'
 import { User } from '../entities/UserEntity'
 
 @Resolver()
@@ -27,6 +31,7 @@ export class FlightResolver {
         'plane',
         'bookedSeats',
         'bookedSeats.passager',
+        'bookedSeats.flight',
         'reviews',
       ],
     })
@@ -36,14 +41,17 @@ export class FlightResolver {
   async getFlightById(
     @Arg('id') id: string,
   ): Promise<Flight | undefined | null> {
-    const res = await this.repository.findOne({ where: { id: id },relations: [
-      'departureLocation',
-      'arrivalLocation',
-      'plane',
-      'bookedSeats',
-      'bookedSeats.passager',
-      'reviews',
-    ],})
+    const res = await this.repository.findOne({
+      where: { id: id },
+      relations: [
+        'departureLocation',
+        'arrivalLocation',
+        'plane',
+        'bookedSeats',
+        'bookedSeats.passager',
+        'reviews',
+      ],
+    })
     return res
   }
 
@@ -51,31 +59,35 @@ export class FlightResolver {
   async findFlight(
     @Arg('data') flightdata: FlightQuery,
     @Arg('doubleFlight') doubleFlight: boolean,
-    @Arg('seats') requestedSeats: number
+    @Arg('seats') requestedSeats: number,
   ): Promise<DoubleFlightQuery | undefined | null> {
-    const res =  new DoubleFlightQuery
+    const res = new DoubleFlightQuery()
 
     let filteredDepartureFlight: Flight[]
     const departureFlight: Flight[] = await this.repository.find({
       where: {
         departureLocation: flightdata.departureLocation,
         arrivalLocation: flightdata.arrivalLocation,
-        departureTime: flightdata.departureTime
+        departureTime: flightdata.departureTime,
       },
       relations: [
-      'departureLocation',
-      'arrivalLocation',
-      'plane',
-      'bookedSeats',
-      'bookedSeats.passager',
-      'reviews',
-    ],})
+        'departureLocation',
+        'arrivalLocation',
+        'plane',
+        'bookedSeats',
+        'bookedSeats.passager',
+        'reviews',
+      ],
+    })
 
     departureFlight.forEach(i => {
-      if (i.bookedSeats.length <= ((i.plane.rowCount * i.plane.columncount) - requestedSeats)) {
+      if (
+        i.bookedSeats.length <=
+        i.plane.rowCount * i.plane.columncount - requestedSeats
+      ) {
         filteredDepartureFlight.push(i)
       }
-    });
+    })
 
     res.departureFlights = departureFlight
 
@@ -84,22 +96,26 @@ export class FlightResolver {
         where: {
           departureLocation: flightdata.arrivalLocation,
           arrivalLocation: flightdata.departureLocation,
-          departureTime: flightdata.returnTime
+          departureTime: flightdata.returnTime,
         },
         relations: [
-        'departureLocation',
-        'arrivalLocation',
-        'plane',
-        'bookedSeats',
-        'bookedSeats.passager',
-        'reviews',
-      ],})
+          'departureLocation',
+          'arrivalLocation',
+          'plane',
+          'bookedSeats',
+          'bookedSeats.passager',
+          'reviews',
+        ],
+      })
 
       departureFlight.forEach(i => {
-        if (i.bookedSeats.length <= ((i.plane.rowCount * i.plane.columncount) - requestedSeats)) {
+        if (
+          i.bookedSeats.length <=
+          i.plane.rowCount * i.plane.columncount - requestedSeats
+        ) {
           filteredDepartureFlight.push(i)
         }
-      });
+      })
 
       res.returnFlights = returnFlight
     }
@@ -118,7 +134,7 @@ export class FlightResolver {
   async addBookedSeat(
     @Arg('data') newSeatData: SeatQuery,
     @Arg('flightId') flightId: string,
-    @Arg('userId') userId: string
+    @Arg('userId') userId: string,
   ): Promise<Seat> {
     const seat: Seat = await this.seatRepository.create(newSeatData)
     const flight: Flight = await this.repository.findOne({
@@ -143,7 +159,7 @@ export class FlightResolver {
   @Mutation(() => Flight, { nullable: true })
   async updateFlight(
     @Arg('data') newFlightData: Flight,
-    @Arg('id') id: string
+    @Arg('id') id: string,
   ): Promise<Flight> {
     const flight: Flight = await this.repository.findOne(id)
 
@@ -158,9 +174,7 @@ export class FlightResolver {
   }
 
   @Mutation(() => Flight, { nullable: true })
-  async deleteFlight(
-    @Arg('id') id: string
-  ): Promise<Flight> {
+  async deleteFlight(@Arg('id') id: string): Promise<Flight> {
     const flight: Flight = await this.repository.findOne({ where: { id: id } })
 
     this.repository.remove(flight)
