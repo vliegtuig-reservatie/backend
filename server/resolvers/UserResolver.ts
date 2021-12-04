@@ -22,8 +22,30 @@ export class UserResolver {
   async getUserById(@Arg('id') id: string): Promise<User | undefined | null> {
     return await this.repository.findOne({
       where: { id: id },
-      relations: ['reviews', 'bookedSeats', 'bookedSeats.flight'],
+      relations: [
+        'reviews',
+        'bookedSeats',
+        'bookedSeats.flight',
+        'bookedSeats.flight.departureLocation',
+        'bookedSeats.flight.arrivalLocation',
+        'bookedSeats.flight.plane',
+      ],
     })
+  }
+
+  @Query(() => User, { nullable: true })
+  async getUserBookedFlightById(
+    @Arg('userId') userId: string,
+    @Arg('flightId') flightId: string,
+  ): Promise<User | undefined | null> {
+    return await this.repository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.bookedSeats', 'bookedSeats')
+      .leftJoinAndSelect('bookedSeats.flight', 'flight')
+      .leftJoinAndSelect('flight.plane', 'plane')
+      .where('bookedSeats.flight.id = :flightId', { flightId })
+      .andWhere('user.id = :userId', { userId })
+      .getOne()
   }
 
   @Mutation(() => User, { nullable: true })
