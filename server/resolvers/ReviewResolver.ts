@@ -85,6 +85,20 @@ export class ReviewResolver {
     return res
   }
 
+  @Query(() => Review, { nullable: true })
+  async getUserReviewByFlightId(
+    @Arg('userId') userId: string,
+    @Arg('flightId') flightId: string,
+  ): Promise<Review | undefined | null> {
+    return await this.repository
+      .createQueryBuilder('review')
+      .leftJoinAndSelect('review.user', 'user')
+      .leftJoinAndSelect('review.flight', 'flight')
+      .where('flight.id = :flightId', { flightId })
+      .andWhere('user.id = :userId', { userId })
+      .getOne()
+  }
+
   @Mutation(() => Review, { nullable: true })
   async updateReview(
     @Arg('data') newReviewData: Review,
