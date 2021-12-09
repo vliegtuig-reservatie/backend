@@ -14,7 +14,12 @@ export class UserResolver {
   @Query(() => [User], { nullable: true })
   async getUsers(): Promise<User[]> {
     return await this.repository.find({
-      relations: ['reviews', 'bookedSeats', 'bookedSeats.flight'],
+      relations: [
+        'reviews',
+        'reviews.flight',
+        'bookedSeats',
+        'bookedSeats.flight',
+      ],
     })
   }
 
@@ -24,6 +29,7 @@ export class UserResolver {
       where: { id: id },
       relations: [
         'reviews',
+        'reviews.flight',
         'bookedSeats',
         'bookedSeats.flight',
         'bookedSeats.flight.departureLocation',

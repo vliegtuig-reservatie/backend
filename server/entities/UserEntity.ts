@@ -33,7 +33,7 @@ export class User extends BaseEntity {
   phonenr: string
 
   @Field(() => [Review], { nullable: true })
-  @OneToMany(() => Review, review => review.flight)
+  @OneToMany(() => Review, review => review.user)
   reviews: Review[]
 
   @Field(() => [Seat], { nullable: true })
