@@ -30,6 +30,9 @@ export class UserResolver {
       relations: [
         'reviews',
         'reviews.flight',
+        'reviews.flight.arrivalLocation',
+        'reviews.flight.departureLocation',
+        'reviews.flight.plane',
         'bookedSeats',
         'bookedSeats.flight',
         'bookedSeats.flight.departureLocation',
