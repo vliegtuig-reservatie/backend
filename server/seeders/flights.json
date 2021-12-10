@@ -16,8 +16,8 @@
   },
   {
     "id": "563d7ac0-4c51-11ec-81d3-0242ac130003",
-    "departureTime": "2021-11-23T14:13:00.000Z",
-    "arrivalTime": "2021-11-23T15:24:00.000Z",
+    "departureTime": "2021-12-23T14:13:00.000Z",
+    "arrivalTime": "2021-12-23T15:24:00.000Z",
     "departureLocation": {
       "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
     },
@@ -28,5 +28,65 @@
       "id": "53995c58-9edc-43c3-95c3-99b5ca3e4040"
     },
     "price": 100
+  },
+  {
+    "id": "c2ece0a6-59f9-11ec-bf63-0242ac130002",
+    "departureTime": "2021-12-30T09:52:00.000Z",
+    "arrivalTime": "2021-12-30T14:12:00.000Z",
+    "departureLocation": {
+      "id": "86131f62-59f7-11ec-bf63-0242ac130002"
+    },
+    "arrivalLocation": {
+      "id": "8080df8a-59f7-11ec-bf63-0242ac130002"
+    },
+    "plane": {
+      "id": "67758fca-59f9-11ec-bf63-0242ac130002"
+    },
+    "price": 205
+  },
+  {
+    "id": "c2ece36c-59f9-11ec-bf63-0242ac130002",
+    "departureTime": "2022-01-02T01:00:00.000Z",
+    "arrivalTime": "2022-01-02T04:13:00.000Z",
+    "departureLocation": {
+      "id": "7263fce8-59f7-11ec-bf63-0242ac130002"
+    },
+    "arrivalLocation": {
+      "id": "8080df8a-59f7-11ec-bf63-0242ac130002"
+    },
+    "plane": {
+      "id": "67758d86-59f9-11ec-bf63-0242ac130002"
+    },
+    "price": 120
+  },
+  {
+    "id": "c2ece4ac-59f9-11ec-bf63-0242ac130002",
+    "departureTime": "2021-12-30T05:36:00.000Z",
+    "arrivalTime": "2021-12-30T09:10:00.000Z",
+    "departureLocation": {
+      "id": "7263fce8-59f7-11ec-bf63-0242ac130002"
+    },
+    "arrivalLocation": {
+      "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
+    },
+    "plane": {
+      "id": "67758d86-59f9-11ec-bf63-0242ac130002"
+    },
+    "price": 90
+  },
+  {
+    "id": "dc773416-59fb-11ec-bf63-0242ac130002",
+    "departureTime": "2022-02-12T22:57:00.000Z",
+    "arrivalTime": "2022-02-13T04:06:00.000Z",
+    "departureLocation": {
+      "id": "8080df8a-59f7-11ec-bf63-0242ac130002"
+    },
+    "arrivalLocation": {
+      "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
+    },
+    "plane": {
+      "id": "677590e2-59f9-11ec-bf63-0242ac130002"
+    },
+    "price": 190
   }
 ]
