@@ -11,6 +11,7 @@ import { User } from '../entities/UserEntity'
 export class UserResolver {
   repository: Repository<User> = getRepository(User)
 
+  @Authorized()
   @Query(() => [User], { nullable: true })
   async getUsers(): Promise<User[]> {
     return await this.repository.find({
@@ -23,6 +24,7 @@ export class UserResolver {
     })
   }
 
+  @Authorized()
   @Query(() => User, { nullable: true })
   async getUserById(@Arg('id') id: string): Promise<User | undefined | null> {
     return await this.repository.findOne({
@@ -42,6 +44,7 @@ export class UserResolver {
     })
   }
 
+  @Authorized()
   @Query(() => User, { nullable: true })
   async getUserBookedFlightById(
     @Arg('userId') userId: string,
@@ -64,6 +67,7 @@ export class UserResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => User, { nullable: true })
   async updateUser(
     @Arg('data') newUserData: User,
@@ -83,6 +87,7 @@ export class UserResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => User, { nullable: true })
   async deleteUser(@Arg('id') id: string): Promise<User> {
     const user: User = await this.repository.findOne({

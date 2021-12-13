@@ -3,3 +3,4 @@ dist
 .env
 ormconfig.env
 db
+server/auth/service-account.json

@@ -11,6 +11,7 @@ import { Airport } from '../entities/AirportEntity'
 export class AirportResolver {
   repository: Repository<Airport> = getRepository(Airport)
 
+  @Authorized()
   @Query(() => [Airport], { nullable: true })
   async getAirports(): Promise<Airport[]> {
     return await this.repository.find({
@@ -22,6 +23,7 @@ export class AirportResolver {
     })
   }
 
+  @Authorized()
   @Query(() => Airport, { nullable: true })
   async getAirportById(
     @Arg('id') id: string,
@@ -36,6 +38,7 @@ export class AirportResolver {
     return res
   }
 
+  @Authorized()
   @Query(() => Airport, { nullable: true })
   async getAirportByIATA(
     @Arg('iatacode') iatacode: string,
@@ -53,6 +56,7 @@ export class AirportResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Airport, { nullable: true })
   async createAirport(@Arg('data') newAirportData: Airport): Promise<Airport> {
     const airport: Airport = await this.repository.create(newAirportData)
@@ -60,6 +64,7 @@ export class AirportResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Airport, { nullable: true })
   async updateAirport(
     @Arg('data') newAirportData: Airport,
@@ -82,6 +87,7 @@ export class AirportResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Airport, { nullable: true })
   async deleteAirport(
     @Arg('id') id: string

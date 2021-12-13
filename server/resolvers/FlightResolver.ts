@@ -22,6 +22,7 @@ export class FlightResolver {
   seatRepository: Repository<Seat> = getRepository(Seat)
   userRepository: Repository<User> = getRepository(User)
 
+  @Authorized()
   @Query(() => [Flight], { nullable: true })
   async getFlights(): Promise<Flight[]> {
     return await this.repository.find({
@@ -37,6 +38,7 @@ export class FlightResolver {
     })
   }
 
+  @Authorized()
   @Query(() => Flight, { nullable: true })
   async getFlightById(
     @Arg('id') id: string,
@@ -55,6 +57,7 @@ export class FlightResolver {
     return res
   }
 
+  @Authorized()
   @Query(() => DoubleFlightQuery, { nullable: true })
   async findFlight(
     @Arg('data') flightdata: FlightQuery,
@@ -123,6 +126,7 @@ export class FlightResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Flight, { nullable: true })
   async createFlight(@Arg('data') newFlightData: Flight): Promise<Flight> {
     const flight: Flight = await this.repository.create(newFlightData)
@@ -130,6 +134,7 @@ export class FlightResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Seat, { nullable: true })
   async addBookedSeat(
     @Arg('data') newSeatData: SeatQuery,
@@ -156,6 +161,7 @@ export class FlightResolver {
     return savedseat
   }
 
+  @Authorized()
   @Mutation(() => Flight, { nullable: true })
   async updateFlight(
     @Arg('data') newFlightData: Flight,
@@ -173,6 +179,7 @@ export class FlightResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Flight, { nullable: true })
   async deleteFlight(@Arg('id') id: string): Promise<Flight> {
     const flight: Flight = await this.repository.findOne({ where: { id: id } })

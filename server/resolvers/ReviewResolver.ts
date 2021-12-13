@@ -15,6 +15,7 @@ export class ReviewResolver {
   flightRepository: Repository<Flight> = getRepository(Flight)
   userRepository: Repository<User> = getRepository(User)
 
+  @Authorized()
   @Query(() => [Review], { nullable: true })
   async getReviews(): Promise<Review[]> {
     return await this.repository.find({
@@ -22,6 +23,7 @@ export class ReviewResolver {
     })
   }
 
+  @Authorized()
   @Query(() => [Review], { nullable: true })
   async getReviewsForSimilarFlights(
     @Arg('flight') flightid: string,
@@ -59,6 +61,7 @@ export class ReviewResolver {
   }
 */
 
+  @Authorized()
   @Mutation(() => Review, { nullable: true })
   async createReview(
     @Arg('data') newReviewData: Review,
@@ -85,6 +88,7 @@ export class ReviewResolver {
     return res
   }
 
+  @Authorized()
   @Query(() => Review, { nullable: true })
   async getUserReviewByFlightId(
     @Arg('userId') userId: string,
@@ -99,6 +103,7 @@ export class ReviewResolver {
       .getOne()
   }
 
+  @Authorized()
   @Mutation(() => Review, { nullable: true })
   async updateReview(
     @Arg('data') newReviewData: Review,
@@ -116,6 +121,7 @@ export class ReviewResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Review, { nullable: true })
   async deleteReview(@Arg('id') id: string): Promise<Review> {
     const review: Review = await this.repository.findOne({ where: { id: id } })

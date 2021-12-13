@@ -11,17 +11,20 @@ import { Plane } from '../entities/PlaneEntity'
 export class PlaneResolver {
   repository: Repository<Plane> = getRepository(Plane)
 
+  @Authorized()
   @Query(() => [Plane], { nullable: true })
   async getPlanes(): Promise<Plane[]> {
     return await this.repository.find({ relations: ['flights'] })
   }
 
+  @Authorized()
   @Query(() => Plane, { nullable: true })
   async getPlaneById(@Arg('id') id: string): Promise<Plane | undefined | null> {
     const res = await this.repository.findOne(id)
     return res
   }
 
+  @Authorized()
   @Mutation(() => Plane, { nullable: true })
   async createPlane(@Arg('data') newPlaneData: Plane): Promise<Plane> {
     const plane: Plane = await this.repository.create(newPlaneData)
@@ -29,6 +32,7 @@ export class PlaneResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Plane, { nullable: true })
   async updatePlane(
     @Arg('data') newPlaneData: Plane,
@@ -44,6 +48,7 @@ export class PlaneResolver {
     return res
   }
 
+  @Authorized()
   @Mutation(() => Plane, { nullable: true })
   async deletePlane(
     @Arg('id') id: string

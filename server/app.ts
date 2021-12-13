@@ -12,6 +12,8 @@ import { graphqlHTTP } from 'express-graphql'
 import { buildSchema } from 'type-graphql'
 import { GraphQLSchema } from 'graphql'
 import seedDatabase from './seeders/seeder'
+import authMiddleware from './auth/firebaseAuthMiddleware'
+import { customAuthChecker } from './auth/customAuthChecker'
 ;(async () => {
   const connectionOptions: ConnectionOptions = await getConnectionOptions() // This line will get the connection options from the typeorm
   createDatabase({ ifNotExist: true }, connectionOptions)
@@ -26,6 +28,8 @@ import seedDatabase from './seeders/seeder'
       app.use(cors())
 
       // MIDDLEWARE
+      app.use(authMiddleware)
+
       app.use(express.json()) // for parsing application/json
 
       // ROUTES
@@ -41,6 +45,8 @@ import seedDatabase from './seeders/seeder'
       const createSchema = async () => {
         await buildSchema({
           resolvers: [`${__dirname}/resolvers/*{.ts,.js}`],
+          authChecker: customAuthChecker,
+          authMode: 'null',
         }).then(_ => {
           schema = _
         })
