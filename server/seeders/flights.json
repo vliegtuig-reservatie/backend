@@ -16,8 +16,8 @@
   },
   {
     "id": "563d7ac0-4c51-11ec-81d3-0242ac130003",
-    "departureTime": "2021-12-23T14:13:00.000Z",
-    "arrivalTime": "2021-12-23T15:24:00.000Z",
+    "departureTime": "2022-12-23T14:13:00.000Z",
+    "arrivalTime": "2022-12-23T15:24:00.000Z",
     "departureLocation": {
       "id": "c5ba474c-4c4d-11ec-81d3-0242ac130003"
     },
@@ -31,8 +31,8 @@
   },
   {
     "id": "c2ece0a6-59f9-11ec-bf63-0242ac130002",
-    "departureTime": "2021-12-30T09:52:00.000Z",
-    "arrivalTime": "2021-12-30T14:12:00.000Z",
+    "departureTime": "2022-12-30T09:52:00.000Z",
+    "arrivalTime": "2022-12-30T14:12:00.000Z",
     "departureLocation": {
       "id": "86131f62-59f7-11ec-bf63-0242ac130002"
     },
@@ -46,8 +46,8 @@
   },
   {
     "id": "c2ece36c-59f9-11ec-bf63-0242ac130002",
-    "departureTime": "2022-01-02T01:00:00.000Z",
-    "arrivalTime": "2022-01-02T04:13:00.000Z",
+    "departureTime": "2022-05-02T01:00:00.000Z",
+    "arrivalTime": "2022-05-02T04:13:00.000Z",
     "departureLocation": {
       "id": "7263fce8-59f7-11ec-bf63-0242ac130002"
     },
@@ -61,8 +61,8 @@
   },
   {
     "id": "c2ece4ac-59f9-11ec-bf63-0242ac130002",
-    "departureTime": "2021-12-30T05:36:00.000Z",
-    "arrivalTime": "2021-12-30T09:10:00.000Z",
+    "departureTime": "2022-03-30T05:36:00.000Z",
+    "arrivalTime": "2022-03-30T09:10:00.000Z",
     "departureLocation": {
       "id": "7263fce8-59f7-11ec-bf63-0242ac130002"
     },

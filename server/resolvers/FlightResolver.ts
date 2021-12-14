@@ -52,6 +52,7 @@ export class FlightResolver {
         'bookedSeats',
         'bookedSeats.passager',
         'reviews',
+        'reviews.user',
       ],
     })
     return res
