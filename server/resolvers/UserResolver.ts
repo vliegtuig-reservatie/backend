@@ -6,6 +6,7 @@ import {
   Repository,
 } from 'typeorm'
 import { User } from '../entities/UserEntity'
+import { getAuth } from 'firebase-admin/auth'
 
 @Resolver()
 export class UserResolver {
@@ -64,6 +65,21 @@ export class UserResolver {
   async createUser(@Arg('data') newUserData: User): Promise<User> {
     const user: User = await this.repository.create(newUserData)
     const res = this.repository.save(user)
+
+    const customClaims = {
+      admin: false,
+    }
+    if (newUserData.email && newUserData.email.endsWith('@howest.be')) {
+      customClaims.admin = true
+    }
+
+    try {
+      await getAuth().setCustomUserClaims(newUserData.id, customClaims)
+    } catch (err) {
+      console.log(err)
+    }
+
+    console.log('user created')
     return res
   }
 
