@@ -1,0 +1,13 @@
+[
+  {
+    "id": "7b89a11c-4c53-11ec-81d3-0242ac130003",
+    "stars": 5,
+    "note": "This is a review",
+    "user": {
+      "id": "09206ac0-4c53-11ec-81d3-0242ac130003"
+    },
+    "flight": {
+      "id": "fb6106bb-4b07-11ec-b829-0242ac1b0003"
+    }
+  }
+]
