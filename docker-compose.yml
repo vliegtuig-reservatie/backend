@@ -6,9 +6,26 @@ services:
     env_file:
       - .env
     volumes:
-      - ./db:/var/lib/mysql
+      - database:/var/lib/mysql
 
   adminer:
     image: adminer:4.8.1
     ports:
       - 9999:8080
+
+  api:
+    image: ghcr.io/beirlaenaaron/jetlist-backend:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8888:8888
+    env_file:
+      - docker.ormconfig.env
+    environment:
+      NODE_ENV: Production
+    volumes:
+      - ./server/auth/service-account.json:/usr/app/auth/service-account.json
+
+volumes:
+  database:
