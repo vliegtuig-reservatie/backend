@@ -24,6 +24,7 @@ services:
       - docker.ormconfig.env
     environment:
       NODE_ENV: Production
+      GOOGLE_APPLICATION_CREDENTIALS: "auth/service-account.json"
     volumes:
       - ./server/auth/service-account.json:/usr/app/auth/service-account.json
 
