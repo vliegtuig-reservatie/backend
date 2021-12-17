@@ -14,7 +14,7 @@ services:
       - 9999:8080
 
   api:
-    image: ghcr.io/beirlaenaaron/jetlist-backend2test:latest
+    image: ghcr.io/beirlaenaaron/jetlist-backend:latest
     build:
       context: .
       dockerfile: ./Dockerfile
