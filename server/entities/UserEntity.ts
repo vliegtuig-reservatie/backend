@@ -33,10 +33,10 @@ export class User extends BaseEntity {
   phonenr: string
 
   @Field(() => [Review], { nullable: true })
-  @OneToMany(() => Review, review => review.user)
+  @OneToMany(() => Review, review => review.user, { onDelete: 'CASCADE' })
   reviews: Review[]
 
   @Field(() => [Seat], { nullable: true })
-  @OneToMany(() => Seat, seat => seat.passager)
+  @OneToMany(() => Seat, seat => seat.passager, { onDelete: 'CASCADE' })
   bookedSeats: Seat[]
 }

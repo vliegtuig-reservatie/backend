@@ -26,12 +26,12 @@ export class Seat extends BaseEntity {
   column: number
   @Field(() => User)
   @ManyToOne(() => User, user => user.reviews, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   passager?: User
   @Field(() => Flight, { nullable: true })
   @ManyToOne(type => Flight, flight => flight.bookedSeats, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   flight: Flight
 }
