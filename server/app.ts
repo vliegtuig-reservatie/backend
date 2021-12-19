@@ -23,8 +23,9 @@ import { customAuthChecker } from './auth/customAuthChecker'
       seedDatabase(connection)
       // APP SETUP
       const app = express(),
-        port = process.env.PORT || 8888
+        port = process.env.PORT || 3001
 
+      // USE CORS
       app.use(cors())
 
       // MIDDLEWARE

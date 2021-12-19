@@ -23,13 +23,13 @@ export class Review extends BaseEntity {
 
   @Field(() => User, { nullable: true }) // deze user relation werkt niet, komt uit op null als je reviews opvraagt
   @ManyToOne(() => User, user => user.reviews, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   user: User
 
   @Field(() => Flight, { nullable: true }) // deze flight relation werkt niet, komt uit op null als je reviews opvraagt
   @ManyToOne(() => Flight, flight => flight.reviews, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   flight: Flight
 

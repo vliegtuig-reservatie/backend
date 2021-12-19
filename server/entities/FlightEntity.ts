@@ -35,12 +35,12 @@ export class Flight extends BaseEntity {
 
   @Field(() => Airport, { nullable: true })
   @ManyToOne(() => Airport, airport => airport.departureFlights, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   departureLocation: Airport
   @Field(() => Airport, { nullable: true })
   @ManyToOne(() => Airport, airport => airport.arrivalFlights, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   arrivalLocation: Airport
   @Field(() => [Airport], { nullable: true })
@@ -50,7 +50,7 @@ export class Flight extends BaseEntity {
 
   @Field(() => Plane, { nullable: true })
   @ManyToOne(() => Plane, plane => plane.flights, {
-    createForeignKeyConstraints: false,
+    onDelete: 'CASCADE',
   })
   plane: Plane
   @Field(() => [Seat], { nullable: true })
