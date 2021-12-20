@@ -87,7 +87,8 @@ export class FlightResolver {
     departureFlight.forEach(i => {
       if (
         i.bookedSeats.length <=
-        i.plane.rowCount * i.plane.columncount - requestedSeats
+        i.plane.firstclassRowCount * i.plane.firstclassColumncount -
+          requestedSeats
       ) {
         filteredDepartureFlight.push(i)
       }
@@ -115,7 +116,8 @@ export class FlightResolver {
       departureFlight.forEach(i => {
         if (
           i.bookedSeats.length <=
-          i.plane.rowCount * i.plane.columncount - requestedSeats
+          i.plane.firstclassRowCount * i.plane.firstclassColumncount -
+            requestedSeats
         ) {
           filteredDepartureFlight.push(i)
         }

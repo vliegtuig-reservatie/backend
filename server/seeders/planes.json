@@ -1,32 +1,52 @@
 [
   {
     "id": "c9850588-4c4d-11ec-81d3-0242ac130003",
-    "rowCount": 5,
-    "columncount": 5,
+    "firstclassRowCount": 2,
+    "firstclassColumncount": 3,
+    "businessRowCount": 5,
+    "businessColumncount": 4,
+    "economyRowCount": 10,
+    "economyColumncount": 5,
     "agency": "TUI"
   },
   {
     "id": "53995c58-9edc-43c3-95c3-99b5ca3e4040",
-    "rowCount": 12,
-    "columncount": 4,
+    "firstclassRowCount": 4,
+    "firstclassColumncount": 4,
+    "businessRowCount": 4,
+    "businessColumncount": 4,
+    "economyRowCount": 6,
+    "economyColumncount": 6,
     "agency": "Ryanair"
   },
   {
     "id": "67758d86-59f9-11ec-bf63-0242ac130002",
-    "rowCount": 12,
-    "columncount": 6,
+    "firstclassRowCount": 2,
+    "firstclassColumncount": 3,
+    "businessRowCount": 3,
+    "businessColumncount": 4,
+    "economyRowCount": 4,
+    "economyColumncount": 5,
     "agency": "Brussels Airlines"
   },
   {
     "id": "67758fca-59f9-11ec-bf63-0242ac130002",
-    "rowCount": 10,
-    "columncount": 6,
+    "firstclassRowCount": 2,
+    "firstclassColumncount": 3,
+    "businessRowCount": 2,
+    "businessColumncount": 4,
+    "economyRowCount": 7,
+    "economyColumncount": 5,
     "agency": "Delta"
   },
   {
     "id": "677590e2-59f9-11ec-bf63-0242ac130002",
-    "rowCount": 20,
-    "columncount": 8,
+    "firstclassRowCount": 3,
+    "firstclassColumncount": 4,
+    "businessRowCount": 5,
+    "businessColumncount": 4,
+    "economyRowCount": 6,
+    "economyColumncount": 4,
     "agency": "KLM"
   }
 ]
