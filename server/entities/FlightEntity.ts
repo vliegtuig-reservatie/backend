@@ -63,7 +63,15 @@ export class Flight extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
-  price: number
+  priceFirstClass: number
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  priceBusiness: number
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  priceEconomy: number
 
   @Field({ nullable: true })
   @CreateDateColumn({ type: 'timestamp', nullable: true })

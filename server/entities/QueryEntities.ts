@@ -11,6 +11,8 @@ export class SeatQuery {
   row: number
   @Field()
   column: number
+  @Field()
+  class: string
 }
 
 ObjectType()

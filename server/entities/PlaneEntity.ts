@@ -22,10 +22,24 @@ export class Plane extends BaseEntity {
 
   @Field()
   @Column()
-  rowCount: number
+  economyRowCount: number
   @Field()
   @Column()
-  columncount: number
+  economyColumncount: number
+
+  @Field()
+  @Column()
+  businessRowCount: number
+  @Field()
+  @Column()
+  businessColumncount: number
+
+  @Field()
+  @Column()
+  firstclassRowCount: number
+  @Field()
+  @Column()
+  firstclassColumncount: number
 
   @Field({ nullable: true })
   @Column({ nullable: true })

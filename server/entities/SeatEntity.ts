@@ -24,6 +24,9 @@ export class Seat extends BaseEntity {
   @Field()
   @Column()
   column: number
+  @Field()
+  @Column()
+  class: string
   @Field(() => User)
   @ManyToOne(() => User, user => user.reviews, {
     onDelete: 'CASCADE',
